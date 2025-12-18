@@ -1,1 +1,54 @@
-{}
+{
+  "services": {
+    "checkout-api": {
+      "inboundOpenPorts": [
+        443
+      ],
+      "allowedCidrs": [
+        "10.0.0.0/8"
+      ],
+      "segmented": false
+    },
+    "auth": {
+      "inboundOpenPorts": [
+        443
+      ],
+      "allowedCidrs": [
+        "10.0.0.0/8"
+      ],
+      "segmented": true
+    },
+    "db": {
+      "inboundOpenPorts": [
+        5432
+      ],
+      "allowedCidrs": [
+        "10.0.0.0/8"
+      ],
+      "segmented": true
+    }
+  },
+  "iam": {
+    "principals": {
+      "app-role": {
+        "permissions": [
+          "s3:GetObject",
+          "logs:PutLogEvents"
+        ],
+        "mfa": false,
+        "tokenTtlMins": 120
+      },
+      "breakglass-admin": {
+        "permissions": [
+          "*:*"
+        ],
+        "mfa": true,
+        "tokenTtlMins": 30
+      }
+    }
+  },
+  "telemetryHints": {
+    "failedAuthRate5m": 126,
+    "anomalyScore": 2.34
+  }
+}

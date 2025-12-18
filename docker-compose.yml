@@ -42,7 +42,9 @@ services:
       - "8080:8080"
     volumes:
       - ./control-plane:/app
+      - ./control-plane/node_modules:/app/node_modules
       - ./digital-twin:/digital-twin
+    command: sh -lc "npm install && npm run start"
 
   ui-dashboard:
     build:
@@ -55,3 +57,9 @@ services:
       - control-plane
     volumes:
       - ./ui-dashboard:/app
+      - ./ui-dashboard/node_modules:/app/node_modules
+    command: sh -lc "npm install && npm run dev -- --host 0.0.0.0 --port 5173"
+
+volumes:
+  control_plane_node_modules:
+  ui_dashboard_node_modules:
