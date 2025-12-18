@@ -1,0 +1,19 @@
+{
+  "name": "ztrl-control-plane",
+  "version": "0.1.0",
+  "private": true,
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "dependencies": {
+    "axios": "^1.6.8",
+    "cors": "^2.8.5",
+    "express": "^4.18.3",
+    "pg": "^8.11.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}

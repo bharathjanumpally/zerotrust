@@ -1,0 +1,25 @@
+# Node
+node_modules/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Vite
+ui-dashboard/dist/
+ui-dashboard/.vite/
+
+# DB / local state
+rl-engine/policy_state.json
+control-plane/sandbox_state.json
+
+# OS
+.DS_Store

@@ -1,0 +1,48 @@
+CREATE TABLE IF NOT EXISTS telemetry_events (
+  id SERIAL PRIMARY KEY,
+  ts TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  source TEXT NOT NULL,
+  type TEXT NOT NULL,
+  payload JSONB NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS system_state (
+  id SERIAL PRIMARY KEY,
+  ts TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  features JSONB NOT NULL,
+  risk_score DOUBLE PRECISION NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS decisions (
+  id SERIAL PRIMARY KEY,
+  ts TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  state_id INTEGER REFERENCES system_state(id) ON DELETE CASCADE,
+  action_id TEXT NOT NULL,
+  action_params JSONB NOT NULL DEFAULT '{}'::jsonb,
+  rl_meta JSONB NOT NULL DEFAULT '{}'::jsonb
+);
+
+CREATE TABLE IF NOT EXISTS simulations (
+  id SERIAL PRIMARY KEY,
+  ts TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  decision_id INTEGER REFERENCES decisions(id) ON DELETE CASCADE,
+  pass_fail BOOLEAN NOT NULL,
+  predicted_impact JSONB NOT NULL,
+  reason TEXT
+);
+
+CREATE TABLE IF NOT EXISTS executions (
+  id SERIAL PRIMARY KEY,
+  ts TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  decision_id INTEGER REFERENCES decisions(id) ON DELETE CASCADE,
+  status TEXT NOT NULL,
+  applied_changes JSONB NOT NULL DEFAULT '{}'::jsonb
+);
+
+CREATE TABLE IF NOT EXISTS rewards (
+  id SERIAL PRIMARY KEY,
+  ts TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  decision_id INTEGER REFERENCES decisions(id) ON DELETE CASCADE,
+  reward_value DOUBLE PRECISION NOT NULL,
+  reward_breakdown JSONB NOT NULL
+);
